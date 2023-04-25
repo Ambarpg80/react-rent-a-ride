@@ -1,15 +1,15 @@
 import React from "react"
 
 function Vehicles({rental}){
-  const  {car_type, id, license_plate, make_and_model ,reserved ,vin} = rental
+  const  {id,full_name,  driving_license, payment_method,vehicle_id } = rental
 
 return(
     <div>
-        <li> Make and Model: {make_and_model}</li>
-        <li> Type: {car_type}</li>
-        <li> VIN: {vin}</li>
-        <li> License Plate: {license_plate}</li>
-        <li> Reserved: {reserved ? "Yes" : "No"}</li>  
+        <li> <b>Full Name:</b> {full_name}</li>
+        <li> <b>Driver's License:</b> {driving_license}</li>
+        <li> <b>Payment_Method: </b>{payment_method}</li>
+        <li> <b>Vehicle ID:</b> {vehicle_id}</li>
+        {/* <li> Reserved: {reserved ? "Yes" : "No"}</li>   */}
         {/* If car is reserved OnClick you will be able to see the reservation */}
         
     </div>

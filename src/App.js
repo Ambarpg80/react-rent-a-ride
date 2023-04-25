@@ -1,7 +1,7 @@
 // import logo from './logo.svg';
 import React, {useEffect, useState} from 'react';
 import './App.css';
-import { Switch, Route} from "react-router-dom";
+import {Switch, Route} from "react-router-dom";
 import NavBar from "./components/NavBar";
 import ReservationList from "./components/ReservationList";
 import ReservationForm from "./components/ReservationForm"
