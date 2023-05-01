@@ -3,22 +3,29 @@ import React, {useEffect, useState} from 'react';
 import './App.css';
 import {Switch, Route} from "react-router-dom";
 import NavBar from "./components/NavBar";
+import VehicleList from "./components/VehicleList";
 import ReservationList from "./components/ReservationList";
 import ReservationForm from "./components/ReservationForm"
-import Vehicles from "./components/Vehicles"
 
 function App() {
   const [viewRentals, setViewRentals] = useState([])
+  const [viewVehicles, setViewVehicles] = useState([])
 
 useEffect(()=>{
-        fetch('http://localhost:9292/reservations')
+        fetch('http://localhost:9292/vehicles/reservations')
         .then(res => res.json())
-        .then(data=> console.log(setViewRentals(data)) )
+        .then(reserved=> setViewRentals(reserved) )
     },[])
 
-  //   function handleNewEntry(newQuestion){
-  //     setTriviaQuestions([...triviaQuestions, newQuestion])
-  // }
+useEffect(()=>{
+      fetch('http://localhost:9292/vehicles')
+      .then(res => res.json())
+      .then(cars=> setViewVehicles(cars))
+  },[])
+  
+    function handleNewEntry(newRental)   { //post request sends new item info here
+      setViewRentals([...viewRentals, newRental])
+  }
 
   // function deleteQuestion(deletedQuestion){
   //   const filteredQuestionList = triviaQuestions.filter(trivia => trivia.id !== deletedQuestion.id)
@@ -29,22 +36,26 @@ useEffect(()=>{
   // JSX to be returned
   return (
     <div className="App">
-      {/* <header className="App-header">
+       <header className="App-header">
         <NavBar />
       </header>
       <Switch> 
-        <Route path="/"> 
+        <Route path="/form"> 
+          <ReservationForm onAddEntry={handleNewEntry} vehicles={viewVehicles} /> 
         </Route>
-        <Route path="/reserved"> */}
-          <ReservationList viewRentals={viewRentals} />  
-       {/* </Route>
-        <Route exact path="/vehicles"> 
-          <Vehicles />
+        <Route path="/vehicles/reservations"> 
+          <ReservationList reservations={viewRentals} />  
+        </Route>
+        <Route  path="/vehicles">
+          <VehicleList vehicles={viewVehicles} 
+                       reservations={viewRentals}
+                       onAddEntry={handleNewEntry} 
+                       />
         </Route> 
-        <Route path="/form">  
-          <ReservationForm  /> 
+        <Route exact path="/">  
+          
         </Route> 
-      </Switch>         */}
+      </Switch>        
     </div>
   );
 }

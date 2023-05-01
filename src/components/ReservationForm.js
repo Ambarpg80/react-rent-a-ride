@@ -75,7 +75,7 @@ return(
         <label> Select Your Vehicle :  
             <select id={reservationData.vehicleId} value={reservationData.vehicleId} onChange={handleChange}> 
              
-             {vehicles.map(vehicle=> <option id={vehicle.id} value={vehicle.reserved}> {vehicle.reserved == "No" ? vehicle.make_and_model : null} </option> )}
+             {vehicles.map(vehicle=> <option key={vehicle.id} id={vehicle.id} value={vehicle.reserved}> {vehicle.reserved  ? vehicle.make_and_model : null} </option> )}
 
             </select> 
           </label><br/>
