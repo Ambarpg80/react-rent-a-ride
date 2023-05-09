@@ -10,18 +10,7 @@ function Vehicles({vehicle,reservations}){
     setShowReservation(!showReservation)
   }
 
-   const reserved = reservations.map(res=> {
-        return( 
-        <div style={{padding: "15px"}} key={res.id}>
-          <b>Full Name:</b> {res.full_name} <br/>   
-          <b>Driver's License:</b> {res.driving_license} <br/>  
-          <b>Payment Method:</b> {res.payment_method }<br/>  
-        </div> 
-        )
-  })
-    
   
-
   
 return(
     <div>

@@ -1,27 +1,37 @@
 import React, {useState} from "react"
 
 function ReservationForm({onAddEntry, vehicles}){
+  const [isReserved, setIsReserved] = useState(false)
     const [reservationData, setReservationData] = useState({
-        fullName: "",
+        full_name: "",
         driversLicense: "",
         paymentMethod: "",
         vehicleId: 0
       });
-    
+     
+      function handleReserved(e){
+        setIsReserved(!isReserved)
+        vehicles.find(car=> console.log( e.target.id))
+      }
+
+
       function handleChange(e){
-        setReservationData({...reservationData,
-               [e.target.id]: e.target.value,
-            }); 
+      
+       setReservationData(
+         {[e.target.id] : e.target.value},
+        console.log( reservationData  )
+               
+        ); 
       }
     
       function handleSubmit(e){
         e.preventDefault();
-        const newFormItem= {  fullName: reservationData.fullName,
+        const newFormItem= {  full_name: reservationData.full_name,
                               driversLicense: reservationData.driversLicense,
                               paymentMethod: reservationData.paymentMethod,
                               vehicleId: parseInt(reservationData.vehicleId)
                             };  //new info to be added
-        fetch("http://localhost:3000/reservations",{  //POST request
+        fetch("http://localhost:9292/vehicles/reservations",{  //POST request
             method: "POST",
             headers:{
                 "Content-Type" : "application/json"
@@ -29,9 +39,8 @@ function ReservationForm({onAddEntry, vehicles}){
             body: JSON.stringify(newFormItem)
         }) 
         .then(res => res.json())
-        .then((newFormItem)=>{
-          onAddEntry(newFormItem)  //add new form information
-          setReservationData({ fullName: "",
+        .then((newFormItem)=>{ onAddEntry(newFormItem)  //add new form information
+          setReservationData({ full_name: "",
                                driversLicense: "",
                                paymentMethod: "",
                                vehicleId: "",})  // resets form after handled submission
@@ -46,8 +55,8 @@ return(
           <label style={{ marginLeft: "50px"}}>  
           Full Name :  <input placeholder="Enter Full Name" 
                               type="text" 
-                              id="fullName" 
-                              value={reservationData.fullName} 
+                              id="full_name" 
+                              value={reservationData.full_name} 
                               onChange={handleChange}
                               >
 
@@ -72,14 +81,17 @@ return(
                               onChange={handleChange}>
                         </input>
           </label><br/>
+          {/* <label id="reserved" style={{padding: 0}}>  {`${isReserved}` ? "Reserved" : " Not Reserved"}
+              <input type="checkbox" id={vehicles.find(vehicle=>vehicle.id)} value={isReserved} onClick={handleReserved} style={{margin: "auto"}}></input> 
+          </label><br/> */}
+
         <label> Select Your Vehicle :  
             <select id={reservationData.vehicleId} value={reservationData.vehicleId} onChange={handleChange}> 
              
-             {vehicles.map(vehicle=> <option key={vehicle.id} id={vehicle.id} value={vehicle.reserved}> {vehicle.reserved  ? vehicle.make_and_model : null} </option> )}
-
+             {vehicles.map(vehicle=> <option key={vehicle.id} id={reservationData.vehicleId} value={vehicle.id}> {!vehicle.reserved  ? `${vehicle.id}- ${vehicle.make_and_model}` : null} </option> )}
             </select> 
-          </label><br/>
-          <button type="submit">Submit</button> 
+        </label><br/>
+          <button type="submit">Reserve It</button> 
       </form> 
      
     </div>

@@ -22,6 +22,8 @@ useEffect(()=>{
       .then(res => res.json())
       .then(cars=> setViewVehicles(cars))
   },[])
+  console.log(viewVehicles)
+  console.log(viewRentals)
   
     function handleNewEntry(newRental)   { //post request sends new item info here
       setViewRentals([...viewRentals, newRental])
@@ -45,16 +47,16 @@ useEffect(()=>{
         </Route>
         <Route path="/vehicles/reservations"> 
           <ReservationList reservations={viewRentals} />  
-        </Route>
+        </Route> 
         <Route  path="/vehicles">
           <VehicleList vehicles={viewVehicles} 
-                       reservations={viewRentals}
+                      //  reservations={viewRentals}
                        onAddEntry={handleNewEntry} 
                        />
         </Route> 
-        <Route exact path="/">  
+        {/* <Route exact path="/">  
           
-        </Route> 
+        </Route>  */}
       </Switch>        
     </div>
   );
