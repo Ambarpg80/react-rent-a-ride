@@ -22,18 +22,23 @@ useEffect(()=>{
       .then(res => res.json())
       .then(cars=> setViewVehicles(cars))
   },[])
-  console.log(viewVehicles)
-  console.log(viewRentals)
+  // console.log(viewVehicles)
+  // console.log(viewRentals)
   
-    function handleNewEntry(newRental)   { //post request sends new item info here
-      setViewRentals([...viewRentals, newRental])
+  function handleNewEntry(newRental)   {  //post request sends new item info here
+    setViewRentals([...viewRentals, newRental])
+    viewVehicles.map(car=> car.id === newRental.vehicle_id ? car.reserved = "Yes" : null)
   }
 
-  // function deleteQuestion(deletedQuestion){
-  //   const filteredQuestionList = triviaQuestions.filter(trivia => trivia.id !== deletedQuestion.id)
-  //     return setTriviaQuestions(filteredQuestionList) 
-  //  }
+  function deleteReservation(deletedReservation){
+    const filteredReservations = viewRentals.filter(rental => rental.id !== deletedReservation.id)
+      return setViewRentals(filteredReservations) 
+   }
 
+   function handleItemUpdate(updatedItem){
+    const updatedItems = viewRentals.map(rental => rental.id === updatedItem.id ? updatedItem : rental)
+    setViewRentals(updatedItems)
+   }
 
   // JSX to be returned
   return (
@@ -46,7 +51,7 @@ useEffect(()=>{
           <ReservationForm onAddEntry={handleNewEntry} vehicles={viewVehicles} /> 
         </Route>
         <Route path="/vehicles/reservations"> 
-          <ReservationList reservations={viewRentals} />  
+          <ReservationList reservations={viewRentals} onDelete={deleteReservation} onItemUpdate={handleItemUpdate}/>  
         </Route> 
         <Route  path="/vehicles">
           <VehicleList vehicles={viewVehicles} 
