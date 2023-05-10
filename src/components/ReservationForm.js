@@ -4,32 +4,30 @@ function ReservationForm({onAddEntry, vehicles}){
   const [isReserved, setIsReserved] = useState(false)
     const [reservationData, setReservationData] = useState({
         full_name: "",
-        driversLicense: "",
-        paymentMethod: "",
-        vehicleId: 0
+        driving_license: "",
+        payment_method: "",
+        vehicle_id: 0
       });
      
-      function handleReserved(e){
-        setIsReserved(!isReserved)
-        vehicles.find(car=> console.log( e.target.id))
-      }
+      // function handleReserved(e){
+      //   setIsReserved(!isReserved)
+      //   vehicles.find(car=> console.log( e.target.id))
+      // }
 
 
       function handleChange(e){
-      
-       setReservationData(
-         {[e.target.id] : e.target.value},
-        console.log( reservationData  )
-               
-        ); 
+       setReservationData({...reservationData,
+         [e.target.id] : e.target.value,
+       });
+       console.log(reservationData) 
       }
     
       function handleSubmit(e){
         e.preventDefault();
         const newFormItem= {  full_name: reservationData.full_name,
-                              driversLicense: reservationData.driversLicense,
-                              paymentMethod: reservationData.paymentMethod,
-                              vehicleId: parseInt(reservationData.vehicleId)
+                              driving_license: reservationData.driving_license,
+                              payment_method: reservationData.payment_method,
+                              vehicle_id: parseInt(reservationData.vehicle_id),
                             };  //new info to be added
         fetch("http://localhost:9292/vehicles/reservations",{  //POST request
             method: "POST",
@@ -39,13 +37,15 @@ function ReservationForm({onAddEntry, vehicles}){
             body: JSON.stringify(newFormItem)
         }) 
         .then(res => res.json())
-        .then((newFormItem)=>{ onAddEntry(newFormItem)  //add new form information
+        .then((newItem)=>{ onAddEntry(newItem)  //add new form information
           setReservationData({ full_name: "",
-                               driversLicense: "",
-                               paymentMethod: "",
-                               vehicleId: "",})  // resets form after handled submission
+                               driving_license: "",
+                               payment_method: "",
+                               vehicle_id: "",})  // resets form after handled submission
         })
       }
+
+      
 return(
     <div className=" formPage-text " >
         
@@ -66,8 +66,8 @@ return(
           <label> 
           Driver's License :  <input placeholder="Enter Driver's License" 
                               type="text" 
-                              id="driversLicense" 
-                              value={reservationData.driversLicense} 
+                              id="driving_license" 
+                              value={reservationData.driving_license} 
                               onChange={handleChange}>
                             {/*   style={{marginLeft : "10px"}} */}
                         </input>
@@ -76,8 +76,8 @@ return(
           <label> 
             Payment Method :  <input placeholder="Enter Payment Method" 
                               type="text" 
-                              id="paymentMethod" 
-                              value={reservationData.paymentMethod} 
+                              id="payment_method" 
+                              value={reservationData.payment_method} 
                               onChange={handleChange}>
                         </input>
           </label><br/>
@@ -86,9 +86,9 @@ return(
           </label><br/> */}
 
         <label> Select Your Vehicle :  
-            <select id={reservationData.vehicleId} value={reservationData.vehicleId} onChange={handleChange}> 
+            <select id="vehicle_id" value={reservationData.vehicle_id} onChange={handleChange}> 
              
-             {vehicles.map(vehicle=> <option key={vehicle.id} id={reservationData.vehicleId} value={vehicle.id}> {!vehicle.reserved  ? `${vehicle.id}- ${vehicle.make_and_model}` : null} </option> )}
+             {vehicles.map(vehicle=> <option key={vehicle.id} id="vehicle_id" value={vehicle.id}> {!vehicle.reserved  ? `${vehicle.id}- ${vehicle.make_and_model}` : null} </option> )}
             </select> 
         </label><br/>
           <button type="submit">Reserve It</button> 
