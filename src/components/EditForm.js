@@ -1,6 +1,6 @@
 import React , {useState} from 'react'
 
-function EditForm({rental, onItemUpdate, showEditForm}){
+function EditForm({rental, onItemUpdate}){
 const [editData, setEditData]= useState({
     full_name: rental.full_name,
     driving_license: rental.driving_license,
