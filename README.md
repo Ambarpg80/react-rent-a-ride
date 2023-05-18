@@ -49,6 +49,7 @@ Set up the Frontend:
   - Create second GET fetch request for Reservations.
   - Add basic CSS to display information
   - Work on CRUD application functionality:
-    - Create reservation submission form to fulfill POST requirement
-    - Create Edit Form to update reservation form.
-    - Create Delete functionality
+    - Create reservation submission form to create a reservation.
+    - Create Edit Form to update a reservation.
+    - Create functionality to delete a reservation
+    - Add extra functionality to update vehicles added or deleted so that vehicles are reflected as reserved in the vehicles table. 
