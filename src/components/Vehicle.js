@@ -1,13 +1,8 @@
-import React , {useState, useEffect} from "react"
-// import Reservation from "./Reservation";
+import React , {useState} from "react"
 
-function Vehicle({vehicle, reservations, isReserved }){
+function Vehicle({vehicle, reservations}){
   const [showReservation, setShowReservation] = useState(false)
-  const reserved = reservations.map(res => res.vehicle_id === vehicle.id ? "Yes" : "No")
-   // const [isReserved, setIsReserved] = useState(false)
-  
-  
-
+  const reserved = !reservations?.length 
   function showReserved(){
     setShowReservation(!showReservation)
   }
@@ -20,7 +15,7 @@ return(
         <b>Car Type:</b> {vehicle.car_type} <br/>
         <b>Make and Model: </b>{vehicle.make_and_model}<br/>
         <b>License Plate:</b> {vehicle.license_plate}<br/>
-        <b>Reserved:</b> {reserved} <br/> 
+         <b>Reserved:</b> { reserved ? "No" : "Yes" } <br/>  
         <hr/>
           <button onClick={showReserved} value={vehicle.id}> Reservation Info</button> <br/>
         <div style={{padding: "15px"}}> 

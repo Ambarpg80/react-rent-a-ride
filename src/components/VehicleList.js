@@ -1,29 +1,24 @@
 import React  from "react"
-import Vehicles from "./Vehicle";
-// import ReservationList from "./ReservationList";
-// import ReservationForm from "./ReservationForm"
+import Vehicle from "./Vehicle";
 
-
-function VehicleList({vehicles, onVehicleUpdate, isReserved, onAddEntry}){
-  //  , , onDelete, setIsReserved
+function VehicleList({vehicles}){
 
   
 return(
-   <div>
+   <div> 
     
-    <div className="reservation grid-container">
-      <div style={{backgroundColor: "#fdffffd5", margin:"30px", borderRadius: "20px"}}>
-        { vehicles.map(vehicle =>  
-        <div className="divStyle grid-item" key={vehicle.id}>  
-            <Vehicles vehicle={vehicle} 
-                      reservations={vehicle.reservations} 
-                      onVehicleUpdate={onVehicleUpdate} 
-                       onAddEntry={onAddEntry} 
-                      // onDelete={onDelete}
-                      isReserved={isReserved}
-                      // setIsReserved= {setIsReserved}
-            />
-        </div> )}
+    <div  className="reservation grid-container">
+      <div  style={{color:"whitesmoke", textAlign: "center" , fontSize: "25px"}}>
+        <b>Welcome to Rent-a-Ride Car Rental Service</b> 
+      </div>
+      <div style={{backgroundColor: "#fdffffd5", margin:"20px", borderRadius: "20px"}}>
+        { vehicles.map(vehicle => 
+            <div className="divStyle grid-item" key={vehicle.id}>  
+                <Vehicle vehicle={vehicle} 
+                         reservations={vehicle.reservations} 
+                />
+            </div> 
+            )}
       </div>
     </div>
 </div>
