@@ -1,4 +1,3 @@
-// import logo from './logo.svg';
 import React, {useEffect, useState} from 'react';
 import './App.css';
 import {Switch, Route} from "react-router-dom";
@@ -22,9 +21,9 @@ useEffect(()=>{
       fetch('http://localhost:9292/vehicles')
       .then(res => res.json())
       .then(cars=> setViewVehicles(cars))
-  },[])
+  },[isReserved])
   
-  function handleNewEntry(newRental)   {  //post request sends new item info here
+  function handleNewEntry(newRental){ //post request sends new item info here
     setViewRentals([...viewRentals, newRental])
   }
 
@@ -35,13 +34,12 @@ useEffect(()=>{
 
   function handleResUpdate(updatedItem){
     const updatedItems = viewRentals.map(rental => rental.id === updatedItem.id ? updatedItem : rental)
-    setViewRentals(updatedItems)
+    return setViewRentals(updatedItems)
    }
 
   function handleVehicleUpdate(updatedItem){
-    const updatedCars = viewVehicles.map(car => car.id === updatedItem.id ? updatedItem : car)
-    setIsReserved(!isReserved)
-    setViewRentals(updatedCars)
+    const updatedCars = viewVehicles.map(car => updatedItem.id === car.id ? updatedItem : car)
+   setViewVehicles(updatedCars)
    }
 
 
@@ -55,24 +53,24 @@ useEffect(()=>{
         <Route path="/form"> 
           <ReservationForm onAddEntry={handleNewEntry} 
                            vehicles={viewVehicles}
+                           isReserved= {isReserved}
+                           setIsReserved={setIsReserved}
                            onVehicleUpdate={handleVehicleUpdate}
-                           
           /> 
         </Route>
         <Route path="/vehicles/reservations"> 
-          <ReservationList reservations={viewRentals} onDelete={deleteReservation} onItemUpdate={handleResUpdate}/>  
+          <ReservationList reservations={viewRentals} 
+                           vehicles={viewVehicles}
+                           isReserved= {isReserved} 
+                           onDelete={deleteReservation} 
+                           onVehicleUpdate={handleVehicleUpdate}
+                           onItemUpdate={handleResUpdate}
+          />  
         </Route> 
         <Route  path="/vehicles">
           <VehicleList vehicles={viewVehicles} 
-                       onAddEntry={handleNewEntry}
-                       onDelete={deleteReservation}
-                       isReserved={isReserved}
-                      //  setIsReserved= {setIsReserved}
-          />
+           />
         </Route> 
-        {/* <Route exact path="/">  
-          
-        </Route>  */}
       </Switch>        
     </div>
   );
