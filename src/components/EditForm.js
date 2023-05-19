@@ -1,6 +1,6 @@
 import React , {useState} from 'react'
 
-function EditForm({rental, onItemUpdate}){
+function EditForm({rental, onItemUpdate, showEditForm}){
 const [editData, setEditData]= useState({
     full_name: rental.full_name,
     driving_license: rental.driving_license,
@@ -11,27 +11,18 @@ const [editData, setEditData]= useState({
     function editName(e){
          setEditData({...editData,
             [e.target.id] : e.target.value})
-        console.log(editData)
     }
     function editLicense(e){
         setEditData({...editData,
     [e.target.id] : e.target.value})
-        console.log(editData)
     }
     function editPayment(e){
         setEditData({...editData,
             [e.target.id] : e.target.value})
-        console.log(editData)
-    }
-    function editVehicleId(e){
-        setEditData({...editData,
-            [e.target.id] : e.target.value})
-        console.log(editData)
     }
 
     function handleUpdate(e){
-         e.preventDefault();
-       
+         e.preventDefault();      
         fetch(`http://localhost:9292/vehicles/reservations/${rental.id}`,{  //PATCH request
             method: "PATCH",
             headers:{
@@ -40,21 +31,18 @@ const [editData, setEditData]= useState({
             body: JSON.stringify({ full_name: editData.full_name,
                                    driving_license: editData.driving_license,
                                    payment_method: editData.payment_method,
-                                   vehicle_id: parseInt(editData.vehicle_id)
+                                   vehicle_id: editData.vehicle_id,
                                 }),
         })
         .then(res => res.json())
         .then(updatedItem => { onItemUpdate(updatedItem)
-            setEditData({ full_name: "",
-                          driving_license: "",
-                          payment_method: "",
-                          vehicle_id: "",}) 
-                        }) //clear form information
+                               showEditForm()
+                             }) //clear form information
         }
     
 
     return(
-        <div >
+        <div style={{marginTop: "50px"}}>
         <form onSubmit={handleUpdate} style={{float: "left", width: "100px"}}>
             <label>Full Name:
                 <input style={{float: "left", width: "250px"}} 
@@ -80,15 +68,7 @@ const [editData, setEditData]= useState({
                        onChange={editPayment}>
                 </input>
             </label>
-            <label>Vehicle ID:
-                <input style={{float: "left", width: "250px"}} 
-                       type="text" 
-                       id="vehicle_id"
-                       value={editData.vehicle_id} 
-                       onChange={editVehicleId}>
-                </input>
-            </label>
-           <button type="Submit" > Done Editing </button>
+          <button type="Submit" > Done Editing </button>
         </form>
         </div>
     )
