@@ -33,7 +33,7 @@ body{background-color: #1c0248;}/* #0D268D */
 form{margin: auto;
    }
 
-div.container{
+ div.container{    /*form */
   font-size : 20px;
   color:#e5e6e6;  
   background-color:#0D268D;
@@ -42,7 +42,7 @@ div.container{
   margin-top: 5%;
   margin-left: 20%;
   margin-right:20%;
-  padding-top: 50px;
+  padding-top: 30px;
   padding-bottom: 50px;
 }
 
@@ -87,16 +87,16 @@ button{
   min-height: 100px;
 }
 
-.reservation.grid-container{
+.reservation.grid-container{ /* reservation and vehicle page grids*/
 font-size : 20px;
 color:#18025B;
 background-color: #0D268D ;     /* #290568; #0D268D*/
 border:  15px, solid, rgb(72, 48, 3) ;
 border-radius: 20px;
-margin-top: 2%;
+margin-top: 3%;
 margin-left: 2%;
 margin-right:2%;
-padding-top: 30px;
+padding-top: 15px;
 padding-bottom: 30px;
 display: grid;
 gap: 50px 50px;
