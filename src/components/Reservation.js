@@ -1,7 +1,7 @@
 import React , {useState} from "react"
 import EditForm from "./EditForm"
 
-function Reservation({rental, onDelete, onItemUpdate}){
+function Reservation({rental,vehicles, isReserved, onDelete, onItemUpdate, onVehicleUpdate}){
   const [showEdit, setShowEdit] = useState(false)
   const  {full_name, driving_license, payment_method, vehicle_id } = rental
    
@@ -14,8 +14,22 @@ function Reservation({rental, onDelete, onItemUpdate}){
       method: "DELETE"
     })
     .then(res => res.json())
-    .then(()=>onDelete(rental))
-  }
+    .then(()=>{onDelete(rental)
+    vehicles.find(vehicle=> {
+      return  (vehicle.id === parseInt(rental.vehicle_id)) ?
+       fetch(`http://localhost:9292/vehicles/${vehicle.id}`,{
+          method: "PATCH",
+          headers: {
+                  'Content-Type' : 'application/json'
+                  },
+          body: JSON.stringify({ reserved: isReserved }),
+        }) 
+        .then(res => res.json())
+        .then(updatedItem => {onVehicleUpdate(updatedItem)
+         }) : null
+    })
+  })
+}
 
 
 return(
@@ -26,11 +40,16 @@ return(
         <b>Driver's License:</b> {driving_license}<br/>
         <b>Payment_Method: </b>{payment_method}<br/>
         <b>Vehicle ID:</b> {vehicle_id}<br/>
-        <button type="Submit" onClick={cancelReservation} style={{float: "left", width: "100px"}}>Cancel</button>
-        <button onClick={showEditForm} style={{float: "right",  width: "100px"}}>Edit </button> <br/>
+        <button  onClick={cancelReservation} style={{float: "left", width: "100px"}}>Cancel</button>
+        <button onClick={showEditForm} style={{float: "right",  width: "100px"}}>{showEdit ? "Close" : "Edit"} </button> <br/>
      </div>  
      <div >
-         {showEdit ? <div> <EditForm  rental={rental} onItemUpdate={onItemUpdate} showEditForm={showEditForm}/> </div> : null }
+         {showEdit ? <div> <EditForm  rental={rental} 
+                                      isReserved= {isReserved}
+                                      onItemUpdate={onItemUpdate} 
+                                      showEditForm={showEditForm}
+                           /> 
+                     </div> : null }
        </div>
     </div>
  
