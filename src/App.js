@@ -58,7 +58,7 @@ useEffect(()=>{
                            onVehicleUpdate={handleVehicleUpdate}
           /> 
         </Route>
-        <Route path="/vehicles/reservations"> 
+        <Route path="/reservations"> 
           <ReservationList reservations={viewRentals} 
                            vehicles={viewVehicles}
                            isReserved= {isReserved} 
@@ -67,7 +67,7 @@ useEffect(()=>{
                            onItemUpdate={handleResUpdate}
           />  
         </Route> 
-        <Route  path="/vehicles">
+        <Route  path="/">
           <VehicleList vehicles={viewVehicles} 
            />
         </Route> 
