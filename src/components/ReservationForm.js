@@ -10,8 +10,7 @@ function ReservationForm({onAddEntry, vehicles, onVehicleUpdate, isReserved}){
      
   function handleChange(e){
     setReservationData({...reservationData,
-                        [e.target.id] : e.target.value,
-    });
+                        [e.target.id] : e.target.value,});
   }
     
   function handleSubmit(e){

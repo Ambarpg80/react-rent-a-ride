@@ -21,9 +21,9 @@ useEffect(()=>{
       fetch('http://localhost:9292/vehicles')
       .then(res => res.json())
       .then(cars=> setViewVehicles(cars))
-  },[isReserved])
+  },[])
   
-  function handleNewEntry(newRental){ //post request sends new item info here
+  function handleNewReservation(newRental){ //post request for new reservation 
     setViewRentals([...viewRentals, newRental])
   }
 
@@ -35,6 +35,10 @@ useEffect(()=>{
   function handleResUpdate(updatedItem){
     const updatedItems = viewRentals.map(rental => rental.id === updatedItem.id ? updatedItem : rental)
     return setViewRentals(updatedItems)
+   }
+
+   function handleNewVehicle(newVehicle){ //post request for new vehicle
+      setViewVehicles([...viewVehicles, newVehicle])
    }
 
   function handleVehicleUpdate(updatedItem){
@@ -51,7 +55,7 @@ useEffect(()=>{
       </header>
       <Switch> 
         <Route path="/form"> 
-          <ReservationForm onAddEntry={handleNewEntry} 
+          <ReservationForm onAddEntry={handleNewReservation} 
                            vehicles={viewVehicles}
                            isReserved= {isReserved}
                            setIsReserved={setIsReserved}
@@ -69,6 +73,7 @@ useEffect(()=>{
         </Route> 
         <Route  path="/">
           <VehicleList vehicles={viewVehicles} 
+                       onNewVehicle={handleNewVehicle}
            />
         </Route> 
       </Switch>        
