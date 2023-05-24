@@ -14,7 +14,7 @@ return(
     
     <div  className="reservation grid-container">
       <div  style={{color:"whitesmoke", textAlign: "center" , fontSize: "25px"}}>
-        <b onClick={handleVehicleForm}>Add a Vehicle to Inventory</b> <br/>
+        <b onClick={handleVehicleForm}>Click Here to Add a Vehicle to the Inventory</b> <br/>
           {showNewCarForm ? <div><AddVehicleForm onNewVehicle={onNewVehicle} />
                             </div> : null
           }
