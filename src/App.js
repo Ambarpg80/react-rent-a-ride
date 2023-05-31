@@ -3,7 +3,7 @@ import './App.css';
 import {Switch, Route} from "react-router-dom";
 import NavBar from "./components/NavBar";
 import VehicleList from "./components/VehicleList";
-import ReservationList from "./components/ReservationList";
+// import ReservationList from "./components/ReservationList";
 import ReservationForm from "./components/ReservationForm"
 
 function App() {
@@ -12,7 +12,7 @@ function App() {
   const [isReserved, setIsReserved] = useState(false)
 
 useEffect(()=>{
-        fetch('http://localhost:9292/vehicles/reservations')
+        fetch('http://localhost:9292/reservations')
         .then(res => res.json())
         .then(reserved=> setViewRentals(reserved) )
     },[])
@@ -24,6 +24,7 @@ useEffect(()=>{
   },[])
   
   function handleNewReservation(newRental){ //post request for new reservation 
+    console.log(viewRentals)
     setViewRentals([...viewRentals, newRental])
   }
 
@@ -62,18 +63,11 @@ useEffect(()=>{
                            onVehicleUpdate={handleVehicleUpdate}
           /> 
         </Route>
-        <Route path="/reservations"> 
-          <ReservationList reservations={viewRentals} 
-                           vehicles={viewVehicles}
-                           isReserved= {isReserved} 
-                           onDelete={deleteReservation} 
-                           onVehicleUpdate={handleVehicleUpdate}
-                           onItemUpdate={handleResUpdate}
-          />  
-        </Route> 
         <Route  path="/">
           <VehicleList vehicles={viewVehicles} 
                        onNewVehicle={handleNewVehicle}
+                       onDelete={deleteReservation} 
+                       onItemUpdate={handleResUpdate}
            />
         </Route> 
       </Switch>        
