@@ -1,8 +1,9 @@
 import React , {useState} from "react"
+import Reservation from "./Reservation"
 
-function Vehicle({vehicle, reservations}){
+function Vehicle({vehicle, onDelete, onItemUpdate}){         
   const [showReservation, setShowReservation] = useState(false)
-  const reserved = !reservations?.length 
+  const reserved = !vehicle.reservations?.length 
   function showReserved(){
     setShowReservation(!showReservation)
   }
@@ -19,15 +20,13 @@ return(
         <hr/>
           <button onClick={showReserved} value={vehicle.id}> Reservation Info</button> <br/>
         <div style={{padding: "15px"}}> 
-          {showReservation ? reservations.map(res=> {
-                  return( 
-                  <div style={{padding: "15px"}} key={res.id}>
-                    <b>Full Name:</b> {res.full_name} <br/>   
-                    <b>Driver's License:</b> {res.driving_license} <br/>  
-                    <b>Payment Method:</b> {res.payment_method }<br/>  
-                  </div> 
-                  )
-                  }) 
+          {showReservation ? (vehicle.reservations).map(reservation => 
+            <div  key={reservation.id}>
+              <Reservation  reservation={reservation}
+                            onDelete={onDelete} 
+                            onItemUpdate={onItemUpdate} 
+              />
+            </div>)
             : null
           } 
         </div>

@@ -2,7 +2,7 @@ import React, {useState}  from "react"
 import Vehicle from "./Vehicle";
 import AddVehicleForm from "./AddVehicleForm";
 
-function VehicleList({vehicles, onNewVehicle}){
+function VehicleList({vehicles, onNewVehicle, onDelete, onItemUpdate}){
   const [showNewCarForm, setShowNewCarForm] = useState(false)
   
   function handleVehicleForm(){
@@ -23,7 +23,8 @@ return(
         { vehicles.map(vehicle => 
             <div className="divStyle grid-item" key={vehicle.id}>  
                 <Vehicle vehicle={vehicle} 
-                         reservations={vehicle.reservations} 
+                          onDelete={onDelete} 
+                          onItemUpdate={onItemUpdate}
                 />
             </div> 
             )}
