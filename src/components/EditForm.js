@@ -1,11 +1,11 @@
 import React , {useState} from 'react'
 
-function EditForm({rental, onItemUpdate, showEditForm}){
+function EditForm({reservation, onItemUpdate, showEditForm}){
 const [editData, setEditData]= useState({
-    full_name: rental.full_name,
-    driving_license: rental.driving_license,
-    payment_method: rental.payment_method,
-    vehicle_id: rental.vehicle_id
+    full_name: reservation.full_name,
+    driving_license: reservation.driving_license,
+    payment_method: reservation.payment_method,
+    vehicle_id: reservation.vehicle_id
 })
 
     function editName(e){
@@ -23,7 +23,7 @@ const [editData, setEditData]= useState({
 
     function handleUpdate(e){
          e.preventDefault();      
-        fetch(`http://localhost:9292/vehicles/reservations/${rental.id}`,{  //PATCH request
+        fetch(`http://localhost:9292/reservations/${reservation.id}`,{  //PATCH request
             method: "PATCH",
             headers:{
                 "Content-Type" : "application/json",

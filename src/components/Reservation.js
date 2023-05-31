@@ -1,33 +1,21 @@
 import React , {useState} from "react"
 import EditForm from "./EditForm"
 
-function Reservation({rental,vehicles, isReserved, onDelete, onItemUpdate, onVehicleUpdate}){
+function Reservation({reservation, onDelete, onItemUpdate}){
   const [showEdit, setShowEdit] = useState(false)
-  const  {full_name, driving_license, payment_method, vehicle_id } = rental
+  const {full_name, driving_license, payment_method, vehicle_id } = reservation
+  // console.log(reservation)
    
   function showEditForm(){
     setShowEdit(!showEdit)
   }
 
   function cancelReservation(){
-    fetch(`http://localhost:9292/vehicles/reservations/${rental.id}`,{
+    fetch(`http://localhost:9292/reservations/${reservation.id}`,{
       method: "DELETE"
     })
     .then(res => res.json())
-    .then(()=>{onDelete(rental)
-    vehicles.find(vehicle=> {
-      return  (vehicle.id === parseInt(rental.vehicle_id)) ?
-       fetch(`http://localhost:9292/vehicles/${vehicle.id}`,{
-          method: "PATCH",
-          headers: {
-                  'Content-Type' : 'application/json'
-                  },
-          body: JSON.stringify({ reserved: isReserved }),
-        }) 
-        .then(res => res.json())
-        .then(updatedItem => {onVehicleUpdate(updatedItem)
-         }) : null
-    })
+    .then(()=>{onDelete(reservation)
   })
 }
 
@@ -44,8 +32,7 @@ return(
         <button onClick={showEditForm} style={{float: "right",  width: "100px"}}>{showEdit ? "Close" : "Edit"} </button> <br/>
      </div>  
      <div >
-         {showEdit ? <div> <EditForm  rental={rental} 
-                                      isReserved= {isReserved}
+         {showEdit ? <div> <EditForm  reservation={reservation} 
                                       onItemUpdate={onItemUpdate} 
                                       showEditForm={showEditForm}
                            /> 

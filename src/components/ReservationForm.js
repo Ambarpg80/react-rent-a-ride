@@ -1,6 +1,6 @@
 import React, {useState} from "react"
 
-function ReservationForm({onAddEntry, vehicles, onVehicleUpdate, isReserved}){
+function ReservationForm({onAddEntry, vehicles}){
   const [reservationData, setReservationData] = useState({
         full_name: "",
         driving_license: "",
@@ -20,7 +20,7 @@ function ReservationForm({onAddEntry, vehicles, onVehicleUpdate, isReserved}){
                         payment_method: reservationData.payment_method,
                         vehicle_id: parseInt(reservationData.vehicle_id),
                         };  //new info to be added
-    fetch("http://localhost:9292/vehicles/reservations",{  //POST request
+    fetch("http://localhost:9292/reservations",{  //POST request
       method: "POST",
       headers:{
               "Content-Type" : "application/json"
@@ -28,25 +28,12 @@ function ReservationForm({onAddEntry, vehicles, onVehicleUpdate, isReserved}){
       body: JSON.stringify(newFormItem)
     }) 
     .then(res => res.json())
-    .then((newItem)=>onAddEntry(newItem))
-    vehicles.find(vehicle=>{  console.log(parseInt(reservationData.vehicle_id))
-      return vehicle.id === parseInt(reservationData.vehicle_id) ?
-       fetch(`http://localhost:9292/vehicles/${vehicle.id}`,{
-          method: "PATCH",
-          headers: {
-                  'Content-Type' : 'application/json'
-                  },
-          body: JSON.stringify({ reserved: !isReserved }),
-        }) 
-        .then(res => res.json())
-        .then(updatedItem => {onVehicleUpdate(updatedItem)
-                              console.log(updatedItem)
-                              setReservationData({ full_name: "",
-                                                   driving_license: "",
-                                                   payment_method: "",
-                                                   vehicle_id: "",})  // resets form after handled submission
-        }) : null
-    }) 
+    .then((newItem)=>{onAddEntry(newItem)
+                     setReservationData({ full_name: "",
+                                          driving_license: "",
+                                          payment_method: "",
+                                          vehicle_id: "",})  // resets form after handled submission
+    })
   }
   
 
