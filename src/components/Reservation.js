@@ -22,7 +22,7 @@ function Reservation({reservation, onDelete, onItemUpdate}){
 
 return(
   
-    <div >
+    <div>
       <div >
         <b>Full Name:</b> {full_name} <br/> 
         <b>Driver's License:</b> {driving_license}<br/>

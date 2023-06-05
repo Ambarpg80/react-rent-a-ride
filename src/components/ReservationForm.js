@@ -32,7 +32,7 @@ function ReservationForm({onAddEntry, vehicles}){
                      setReservationData({ full_name: "",
                                           driving_license: "",
                                           payment_method: "",
-                                          vehicle_id: "",})  // resets form after handled submission
+                                          vehicle_id: 1,})  // resets form after handled submission
     })
   }
   
@@ -79,11 +79,12 @@ return(
             <select id="vehicle_id" 
                     defaultValue={reservationData.vehicle_id} 
                     onChange={handleChange}> 
-                {vehicles.map(vehicle=> <option key={vehicle.id} 
-                                             id="vehicle_id" 
-                                             value={vehicle.id}> 
-                                        { `${vehicle.id}- ${vehicle.make_and_model}` } 
-                                      </option> )}
+              {vehicles.map(vehicle=> 
+                <option key={vehicle.id} 
+                        id="vehicle_id" 
+                        value={vehicle.id}> 
+                  { `${vehicle.id}- ${vehicle.make_and_model}` } 
+                </option> )}  
             </select> 
         </label><br/>
           <button type="submit">Reserve It</button> 
