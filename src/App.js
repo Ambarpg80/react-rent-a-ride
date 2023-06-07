@@ -11,8 +11,8 @@ function App() {
 useEffect(()=>{
       fetch('http://localhost:9292/vehicles')
       .then(res => res.json())
-        .then(cars => {setVehicles(cars)
-                      console.log(cars)})
+        .then(cars => setVehicles(cars) )
+                     
   },[]) 
 
      
