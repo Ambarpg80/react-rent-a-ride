@@ -32,7 +32,7 @@ return(
         <button onClick={showEditForm} style={{float: "right",  width: "100px"}}>{showEdit ? "Close" : "Edit"} </button> <br/>
      </div>  
      <div >
-         {showEdit ? <div> <EditForm  reservation={reservation} 
+         {showEdit ? <div > <EditForm  reservation={reservation} 
                                       onItemUpdate={onItemUpdate} 
                                       showEditForm={showEditForm}
                            /> 

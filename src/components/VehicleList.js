@@ -21,7 +21,7 @@ return(
       </div>
       <div style={{backgroundColor: "#fdffffd5", margin:"20px", borderRadius: "20px"}}>
         { vehicles.map(vehicle => 
-            <div className="divStyle grid-item" key={vehicle.id}>  
+            <div className="divStyle grid-item" key={Math.random() * 100}>  
                 <Vehicle vehicle={vehicle} 
                           onDelete={onDelete} 
                           onItemUpdate={onItemUpdate}

@@ -77,7 +77,7 @@ return(
         <label> 
           Select Your Vehicle :  
             <select id="vehicle_id" 
-                    defaultValue={reservationData.vehicle_id} 
+                    value={reservationData.vehicle_id} 
                     onChange={handleChange}> 
               {vehicles.map(vehicle=> 
                 <option key={vehicle.id} 
