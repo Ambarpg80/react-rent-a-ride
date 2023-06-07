@@ -4,7 +4,7 @@ import AddVehicleForm from "./AddVehicleForm";
 
 function VehicleList({vehicles, onNewVehicle, onDelete, onItemUpdate}){
   const [showNewCarForm, setShowNewCarForm] = useState(false)
-  
+  // console.log(vehicles)
   function handleVehicleForm(){
     setShowNewCarForm(!showNewCarForm)
   }

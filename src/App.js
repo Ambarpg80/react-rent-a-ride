@@ -6,40 +6,42 @@ import VehicleList from "./components/VehicleList";
 import ReservationForm from "./components/ReservationForm"
 
 function App() {
-  const [viewRentals, setViewRentals] = useState([])
-  const [viewVehicles, setViewVehicles] = useState([])
-  // const resCollection = viewVehicles.map(vehicle=>vehicle.reservations)
-
-useEffect(()=>{
-        fetch('http://localhost:9292/reservations')
-        .then(res => res.json())
-        .then(reserved=> setViewRentals(reserved) )
-    },[])
+  const [vehicles, setVehicles] = useState([])
 
 useEffect(()=>{
       fetch('http://localhost:9292/vehicles')
       .then(res => res.json())
-      .then(cars => setViewVehicles(cars))
-  },[viewRentals])
+        .then(cars => {setVehicles(cars)
+                      console.log(cars)})
+  },[]) 
 
-    
-  function handleNewReservation(newRental){  //create request for new reservation
-   setViewRentals([...viewRentals, newRental])
+     
+  function addNewReservation(newRental){  //create request for new reservation
+    // console.log(vehicles, newRental)
+    const vehicleReservations = vehicles.find(vehicle=> vehicle.id === newRental.vehicle_id ? vehicle.reservations : null) 
+      console.log(vehicleReservations.reservations)
+    const newReservationsList = [...vehicleReservations.reservations, newRental]
+    console.log(newReservationsList)
+    console.log(vehicles)
+    setVehicles([...vehicles, newReservationsList])
+    console.log(vehicles)
   }
 
   function deleteReservation(deletedRes){ //delete request
-    const deletedReservation = viewRentals.filter(rental => rental.id !== deletedRes.id) 
-    setViewRentals(deletedReservation) 
+    console.log(deletedRes)
+    // const deletedReservation = viewRentals.filter(rental => rental.id !== deletedRes.id) 
+    // setVehicles(deletedReservation) 
    }
 
   function handleResUpdate(updatedItem){  //update request
-    const updatedItems = viewRentals.map(rental => rental.id === updatedItem.id ? updatedItem : rental)
-    setViewRentals(updatedItems)
+    console.log(updatedItem)
+    // const updatedItems = viewRentals.map(rental => rental.id === updatedItem.id ? updatedItem : rental)
+    // setVehicles(updatedItems)
    }
 
-   function handleNewVehicle(newVehicle){ //post request for new vehicle
+   function addNewVehicle(newVehicle){ //post request for new vehicle
     console.log(newVehicle)  
-    setViewVehicles([...viewVehicles, newVehicle])
+    setVehicles([...vehicles, newVehicle])
    }
 
 
@@ -51,13 +53,13 @@ useEffect(()=>{
       </header>
       <Switch> 
         <Route path="/form"> 
-          <ReservationForm onAddEntry={handleNewReservation} 
-                           vehicles={viewVehicles}
+          <ReservationForm onAddReservation={addNewReservation} 
+                           vehicles={vehicles}
           /> 
         </Route>
         <Route  path="/">
-          <VehicleList vehicles={viewVehicles} 
-                       onNewVehicle={handleNewVehicle}
+          <VehicleList vehicles={vehicles} 
+                       onNewVehicle={addNewVehicle}
                        onDelete={deleteReservation} 
                        onItemUpdate={handleResUpdate}
            />

@@ -1,6 +1,6 @@
 import React, {useState} from "react"
 
-function ReservationForm({onAddEntry, vehicles}){
+function ReservationForm({onAddReservation, vehicles}){
   const [reservationData, setReservationData] = useState({
         full_name: "",
         driving_license: "",
@@ -28,7 +28,7 @@ function ReservationForm({onAddEntry, vehicles}){
       body: JSON.stringify(newFormItem)
     }) 
     .then(res => res.json())
-    .then((newItem)=>{onAddEntry(newItem)
+    .then((newItem)=>{onAddReservation(newItem)
                      setReservationData({ full_name: "",
                                           driving_license: "",
                                           payment_method: "",
