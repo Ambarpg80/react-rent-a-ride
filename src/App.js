@@ -12,35 +12,33 @@ useEffect(()=>{
       fetch('http://localhost:9292/vehicles')
       .then(res => res.json())
         .then(cars => setVehicles(cars) )
-                     
   },[]) 
 
      
   function addNewReservation(newRental){  //create request for new reservation
-    // console.log(vehicles, newRental)
-    const vehicleReservations = vehicles.find(vehicle=> vehicle.id === newRental.vehicle_id ? vehicle.reservations : null) 
-      console.log(vehicleReservations.reservations)
-    const newReservationsList = [...vehicleReservations.reservations, newRental]
-    console.log(newReservationsList)
-    console.log(vehicles)
+    const singleVehicle = vehicles.find(vehicle=> vehicle.id === newRental.vehicle_id ? vehicle.reservations : null) 
+    const newReservationsList = [...singleVehicle.reservations, newRental]
+    singleVehicle.reservations = newReservationsList
     setVehicles([...vehicles, newReservationsList])
-    console.log(vehicles)
   }
 
   function deleteReservation(deletedRes){ //delete request
-    console.log(deletedRes)
-    // const deletedReservation = viewRentals.filter(rental => rental.id !== deletedRes.id) 
-    // setVehicles(deletedReservation) 
+    const singleVehicle = vehicles.find(vehicle => vehicle.id === deletedRes.vehicle_id ? vehicle.reservations : null)  
+    const filteredReservations = singleVehicle.reservations.filter(reservation=> reservation.id !== deletedRes.id)
+    singleVehicle.reservations =  filteredReservations 
+    const allVehicles = [...vehicles, singleVehicle]
+    setVehicles(allVehicles) 
    }
 
   function handleResUpdate(updatedItem){  //update request
-    console.log(updatedItem)
-    // const updatedItems = viewRentals.map(rental => rental.id === updatedItem.id ? updatedItem : rental)
-    // setVehicles(updatedItems)
+    const singleVehicle = vehicles.find(vehicle => vehicle.id === updatedItem.vehicle_id ? vehicle.reservations : null) 
+    const updatedItems = singleVehicle.reservations.map(rental => rental.id === updatedItem.id ? updatedItem : rental)
+    singleVehicle.reservations = updatedItems
+    const currentItems= [...vehicles, updatedItems]
+    setVehicles(currentItems)
    }
 
-   function addNewVehicle(newVehicle){ //post request for new vehicle
-    console.log(newVehicle)  
+   function addNewVehicle(newVehicle){ //post request for new vehicle  
     setVehicles([...vehicles, newVehicle])
    }
 
