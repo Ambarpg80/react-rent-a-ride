@@ -34,8 +34,7 @@ useEffect(()=>{
     const singleVehicle = vehicles.find(vehicle => vehicle.id === updatedItem.vehicle_id ? vehicle.reservations : null) 
     const updatedItems = singleVehicle.reservations.map(rental => rental.id === updatedItem.id ? updatedItem : rental)
     singleVehicle.reservations = updatedItems
-    const currentItems= [...vehicles, updatedItems]
-    setVehicles(currentItems)
+    setVehicles([...vehicles])
    }
 
    function addNewVehicle(newVehicle){ //post request for new vehicle  

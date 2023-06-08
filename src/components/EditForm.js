@@ -1,6 +1,6 @@
 import React , {useState} from 'react'
 
-function EditForm({reservation, onItemUpdate, showEditForm}){
+function EditForm({reservation, onItemUpdate,showEditForm}){
 const [editData, setEditData]= useState({
     full_name: reservation.full_name,
     driving_license: reservation.driving_license,
@@ -8,18 +8,11 @@ const [editData, setEditData]= useState({
     vehicle_id: reservation.vehicle_id
 })
 
-    function editName(e){
+    function editField(e){
          setEditData({...editData,
             [e.target.id] : e.target.value})
     }
-    function editLicense(e){
-        setEditData({...editData,
-    [e.target.id] : e.target.value})
-    }
-    function editPayment(e){
-        setEditData({...editData,
-            [e.target.id] : e.target.value})
-    }
+   
 
     function handleUpdate(e){
          e.preventDefault();      
@@ -36,8 +29,8 @@ const [editData, setEditData]= useState({
         })
         .then(res => res.json())
         .then(updatedItem => { onItemUpdate(updatedItem)
-                               showEditForm()
-                             }) //clear form information
+                               showEditForm()//collapse form 
+                             }) 
         }
     
 
@@ -49,7 +42,7 @@ const [editData, setEditData]= useState({
                        type="text"
                        id="full_name" 
                        value={editData.full_name} 
-                       onChange={editName}>
+                       onChange={editField}>
                 </input>
             </label>
             <label>Driver's License:
@@ -57,7 +50,7 @@ const [editData, setEditData]= useState({
                        type="text"
                        id="driving_license" 
                        value={editData.driving_license} 
-                       onChange={editLicense}>
+                       onChange={editField}>
                 </input>
             </label>
             <label>Payment_Method:
@@ -65,7 +58,7 @@ const [editData, setEditData]= useState({
                        type="text" 
                        id="payment_method"
                        value={editData.payment_method} 
-                       onChange={editPayment}>
+                       onChange={editField}>
                 </input>
             </label>
           <button type="Submit" > Done Editing </button>

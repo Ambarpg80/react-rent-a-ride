@@ -80,7 +80,7 @@ return(
                     value={reservationData.vehicle_id} 
                     onChange={handleChange}> 
               {vehicles.map(vehicle=> 
-                <option key={vehicle.id} 
+                <option key={Math.random() * 100} 
                         id="vehicle_id" 
                         value={vehicle.id}> 
                   { `${vehicle.id}- ${vehicle.make_and_model}` } 

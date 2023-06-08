@@ -4,6 +4,8 @@ import Reservation from "./Reservation"
 function Vehicle({vehicle, onDelete, onItemUpdate}){         
   const [showReservation, setShowReservation] = useState(false)
   const reserved = !vehicle.reservations?.length 
+
+  
   function showReserved(){
     setShowReservation(!showReservation)
   }
