@@ -19,15 +19,14 @@ useEffect(()=>{
     const singleVehicle = vehicles.find(vehicle=> vehicle.id === newRental.vehicle_id ? vehicle.reservations : null) 
     const newReservationsList = [...singleVehicle.reservations, newRental]
     singleVehicle.reservations = newReservationsList
-    setVehicles([...vehicles, newReservationsList])
+    setVehicles([...vehicles])
   }
 
   function deleteReservation(deletedRes){ //delete request
     const singleVehicle = vehicles.find(vehicle => vehicle.id === deletedRes.vehicle_id ? vehicle.reservations : null)  
     const filteredReservations = singleVehicle.reservations.filter(reservation=> reservation.id !== deletedRes.id)
     singleVehicle.reservations =  filteredReservations 
-    const allVehicles = [...vehicles, singleVehicle]
-    setVehicles(allVehicles) 
+    setVehicles([...vehicles]) 
    }
 
   function handleResUpdate(updatedItem){  //update request
